@@ -2,12 +2,13 @@ version: "2"
 
 services:
   rhino-data-service:
-    image: rhino-data-volume:0.1.0
+    image: bagdemir/rhino-data-volume:0.5.0
     container_name: rhino-data-service
     volumes:
     - rhino-grafana-volume:/grafana-data
     - rhino-influxdb-volume:/influxdb-data
-    command: tail -F /var/log/syslog
+    command: sh -c "/root/backups/init.sh && tail -f /root/backups/init.sh"
+    tty: true
 
   influxdb:
     image: influxdb:latest
@@ -22,14 +23,14 @@ services:
       - rhino-influxdb-volume:/var/lib/influxdb
 
   grafana:
-    image: bagdemir/rhino-grafana:1.0.0
+    image: bagdemir/rhino-grafana:1.1.0
     container_name: grafana
     ports:
       - "3000:3000"
     depends_on:
       - rhino-data-service
     volumes:
-      - rhino-grafana-volume:/var/lib/grafana
+      - rhino-grafana-volume:/grafana-data
     links:
       - influxdb
 
