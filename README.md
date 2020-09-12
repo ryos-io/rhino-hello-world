@@ -28,4 +28,5 @@ After the first login on Grafana, there is no measurement yet. Now, you can go b
 <img width="921" alt="Screenshot 2020-09-13 at 00 26 46" src="https://user-images.githubusercontent.com/1160613/93006052-d6a02200-f557-11ea-959e-bc6df9299d97.png">
 
 Rhino will create a new Grafana dashboard for the simulation execution, and you can observe the incoming simulation execution metrics:
+
 <img width="1164" alt="Screenshot 2020-09-13 at 00 29 33" src="https://user-images.githubusercontent.com/1160613/93006084-38f92280-f558-11ea-88ea-fd52f21d8740.png">
