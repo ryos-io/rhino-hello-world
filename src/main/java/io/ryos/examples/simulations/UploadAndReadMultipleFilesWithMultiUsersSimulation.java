@@ -25,7 +25,6 @@ import io.ryos.rhino.sdk.annotations.UserProvider;
 import io.ryos.rhino.sdk.annotations.UserRepository;
 import io.ryos.rhino.sdk.dsl.DslBuilder;
 import io.ryos.rhino.sdk.dsl.HttpDsl;
-import io.ryos.rhino.sdk.dsl.HttpRetriableDsl;
 import io.ryos.rhino.sdk.dsl.SessionDslItem;
 import io.ryos.rhino.sdk.dsl.data.HttpResponse;
 import io.ryos.rhino.sdk.dsl.data.builder.MapperBuilder;
@@ -34,8 +33,8 @@ import io.ryos.rhino.sdk.providers.OAuthUserProvider;
 import io.ryos.rhino.sdk.providers.UUIDProvider;
 import io.ryos.rhino.sdk.users.repositories.OAuthUserRepositoryFactoryImpl;
 
-import static io.ryos.examples.benchmark.Constants.FILES_ENDPOINT;
-import static io.ryos.examples.benchmark.Constants.X_REQUEST_ID;
+import static io.ryos.examples.benchmark.TestSetup.FILES_ENDPOINT;
+import static io.ryos.examples.benchmark.TestSetup.X_REQUEST_ID;
 import static io.ryos.rhino.sdk.dsl.DslBuilder.dsl;
 import static io.ryos.rhino.sdk.dsl.data.UploadStream.file;
 import static io.ryos.rhino.sdk.dsl.data.builder.ForEachBuilderImpl.in;

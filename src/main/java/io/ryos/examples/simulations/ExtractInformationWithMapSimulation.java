@@ -16,6 +16,8 @@
 
 package io.ryos.examples.simulations;
 
+import io.ryos.rhino.sdk.annotations.Grafana;
+import io.ryos.rhino.sdk.annotations.Influx;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -26,15 +28,14 @@ import io.ryos.rhino.sdk.annotations.Simulation;
 import io.ryos.rhino.sdk.annotations.UserRepository;
 import io.ryos.rhino.sdk.dsl.DslBuilder;
 import io.ryos.rhino.sdk.dsl.HttpDsl;
-import io.ryos.rhino.sdk.dsl.HttpRetriableDsl;
 
 import io.ryos.rhino.sdk.dsl.data.HttpResponse;
 import io.ryos.rhino.sdk.dsl.mat.HttpDslData;
 import io.ryos.rhino.sdk.users.repositories.OAuthUserRepositoryFactoryImpl;
-import static io.ryos.examples.benchmark.Constants.DISCOVERY_ENDPOINT;
-import static io.ryos.examples.benchmark.Constants.MAPPER;
-import static io.ryos.examples.benchmark.Constants.X_API_KEY;
-import static io.ryos.examples.benchmark.Constants.X_REQUEST_ID;
+import static io.ryos.examples.benchmark.TestSetup.DISCOVERY_ENDPOINT;
+import static io.ryos.examples.benchmark.TestSetup.MAPPER;
+import static io.ryos.examples.benchmark.TestSetup.X_API_KEY;
+import static io.ryos.examples.benchmark.TestSetup.X_REQUEST_ID;
 import static io.ryos.rhino.sdk.dsl.DslBuilder.dsl;
 import static io.ryos.rhino.sdk.dsl.MaterializableDslItem.http;
 import static io.ryos.rhino.sdk.dsl.data.builder.MapperBuilder.in;
@@ -44,6 +45,8 @@ import static io.ryos.rhino.sdk.dsl.utils.SessionUtils.session;
 
 @Simulation(name = "Reactive Multi-User Test")
 @UserRepository(factory = OAuthUserRepositoryFactoryImpl.class)
+@Influx
+@Grafana
 public class ExtractInformationWithMapSimulation {
 
   @Dsl(name = "Load DSL Discovery and GET")

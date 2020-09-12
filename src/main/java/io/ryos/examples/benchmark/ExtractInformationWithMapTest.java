@@ -23,15 +23,13 @@ import io.ryos.rhino.sdk.Simulation;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
 public class ExtractInformationWithMapTest {
-
   private static final String PROPS = "classpath:///rhino.properties";
-  private static final int PORT = 8089;
 
   public static void main(String... args) throws InterruptedException {
-    var wmServer = startServer();
+
+    WireMockServer wmServer = TestSetup.init().getWmServer();
 
     wmServer.stubFor(WireMock.post(urlEqualTo("/token"))
         .willReturn(aResponse()
@@ -46,24 +44,10 @@ public class ExtractInformationWithMapTest {
     wmServer.stubFor(WireMock.get(urlEqualTo("/api/discovery"))
         .willReturn(aResponse()
             .withStatus(200)
-            .withBody("{\"endpoint\": \"http://localhost:"+PORT+"/api/resource\"}")));
+            .withBody("{\"endpoint\": \"http://localhost:"+wmServer.port()+"/api/resource\"}")));
 
     Simulation.getInstance(PROPS, ExtractInformationWithMapSimulation.class).start();
 
     Thread.sleep(5000L);
-  }
-
-  private static WireMockServer startServer() {
-    var wmServer = new WireMockServer(PORT);
-
-    wmServer = new WireMockServer(wireMockConfig().port(PORT)
-        .jettyAcceptors(2)
-        .jettyAcceptQueueSize(100)
-        .containerThreads(100));
-    wmServer.start();
-
-    WireMock.configureFor("localhost", PORT);
-
-    return wmServer;
   }
 }
