@@ -14,6 +14,10 @@
     <properties>
         <docker.image.name>testing/${project.artifactId}</docker.image.name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docker.base.image>bagdemir/rhino:latest</docker.base.image>
+        <docker-registry.hostname />
+        <docker-registry.hostname.release />
+        <docker-maven-plugin.version>0.20.0</docker-maven-plugin.version>
     </properties>
 
     <build>
@@ -33,6 +37,46 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
+                <version>0.27.2</version>
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <registry>${docker-registry.hostname}</registry>
+                    <images>
+                        <image>
+                            <name>testing/${project.artifactId}</name>
+                            <build>
+                                <from>bagdemir/rhino:latest</from>
+                                <maintainer>erhan@ryos.io</maintainer>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                                <entryPoint>
+                                    <exec>
+                                        <arg>java</arg>
+                                        <arg>-jar</arg>
+                                        <arg>/opt/rhino/${project.artifactId}.jar</arg>
+                                    </exec>
+                                </entryPoint>
+                                <assembly>
+                                    <basedir>/opt</basedir>
+                                    <mode>dir</mode>
+                                    <descriptorRef>artifact-with-dependencies</descriptorRef>
+                                    <targetDir>/opt/rhino/</targetDir>
+                                </assembly>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
